@@ -1,6 +1,6 @@
-require 'scrap_css'
+require 'assets_public'
 require 'pry'
-describe "ScrapCss::Html" do
+describe "AssetsPublic" do
   it ".get_css_clases" do
     expect(ScrapCss::Html.get_css_clases('<span class="TweetBoxExtras-item"><div class="geo-picker dropdown">'))
     .to eq(["TweetBoxExtras-item", "geo-picker", "dropdown"])
