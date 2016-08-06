@@ -1,0 +1,3 @@
+#!/usr/bin/env ruby
+require 'assets_public'
+result = assets_public.run(ARGV[0], ARGV[1])

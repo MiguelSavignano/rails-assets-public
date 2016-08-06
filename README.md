@@ -1,6 +1,6 @@
 # ScrapCss
 
-Get only the css used in a html portion; use to understand a web components from other web site.
+All javascript you in public move to vendor and requiere in aplication.js
 
 ##Getting started
 ```sh
