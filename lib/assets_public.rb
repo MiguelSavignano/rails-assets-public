@@ -1,11 +1,9 @@
 module AssetsPublic
+  def self.script?(line="")
+    line.include?("<script>") && line.include?("</script>") && line.include?('src=')
 
-  def self.html_file(path)
-    ScrapCss::Html.new(path)
-  end
-
-  def self.css_file(path)
-    ScrapCss::Css.new(path)
+  def self.extract_src_path(line="")
+    line.scan(/src="([^"]*)"/).first.first
   end
 
   def self.run(path_html, path_css)
@@ -22,6 +20,16 @@ class AssetsPublic::Files
   def initialize(path=".")
     @htmls = Dir["#{path}/**/*.html"]
   end
+  def self.resolve_path(path_file="", src="")
+    hash = Hash.new(0)
+    src.split("/").each{ |value| hash[value] += 1 }
+    up_folder_times = hash[".."] + 1
+    src.gsub!("../","")
+
+    path_file_split = path_file.split("/")
+    up_folder_times.times{ path_file_split.pop }
+    "#{path_file_split.join('/')}/#{src}"
+  end
   def htmls
     @htmls
   end
@@ -33,19 +41,13 @@ class AssetsPublic::Html
     @lines = IO.readlines(path)
   end
 
-  def self.script?(line="")
-    line.include?("<script") && line.include?("</script>")
-  end
-
-  def self.extract_src_path(line="")
-    line.scan(/src="([^"]*)"/).first.first
-  end
-
   def lines
     @lines
   end
 
-  def scripts
+  def scripts_path
+    scripts_lines = @lines.select{|line| AssetsPublic::Html.script? line }
+    scripts_lines.map{|script_line| AssetsPublic::Html.extract_src_path script_line  }
   end
 end
 #
