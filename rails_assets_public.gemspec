@@ -2,7 +2,7 @@ require File.expand_path("../lib/version", __FILE__)
 
 Gem::Specification.new do |s|
   s.name        = 'rails-assets-public'
-  s.version     = ScrapCss::VERSION
+  s.version     = AssetsPublic::VERSION
   s.executables << 'assets_public'
   s.date        = '2016-08-05'
   s.summary     = "AssetsPublic"
