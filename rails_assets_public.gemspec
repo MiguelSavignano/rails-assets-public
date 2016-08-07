@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.executables << 'assets_public'
   s.date        = '2016-08-05'
   s.summary     = "AssetsPublic"
-  s.description = "All javascript you in public move to vendor and requiere in aplication.js"
+  s.description = "All javascript used in htm files move to vendor"
   s.authors     = ["Miguel Savignano"]
   s.email       = 'migue.masx@gmail.com'
   s.files       = ["lib/assets_public.rb"]
