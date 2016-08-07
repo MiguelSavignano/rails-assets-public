@@ -13,12 +13,12 @@ describe "AssetsPublic" do
     r = AssetsPublic.extract_src_path("<script src='../plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js'></script>")
     expect(r).to eq('../plugins/bower_components/jquery-sparkline/jquery.charts-sparkline.js')
   end
-  it ".run" do
-    r = AssetsPublic.run("spec/fixture/public/app", "spec/fixture/vendor")
-    expect(r[:html_files].size).to eq(74)
-    expect(r[:scripts_paths].size).to eq(94)
-    expect(r[:scripts_http].size).to eq(5)
-  end
+  # it ".run" do
+  #   r = AssetsPublic.run("spec/fixture/public/app", "spec/fixture/vendor")
+  #   expect(r[:html_files].size).to eq(74)
+  #   expect(r[:scripts_paths].size).to eq(94)
+  #   expect(r[:scripts_http].size).to eq(5)
+  # end
 end
 
 describe "AssetsPublic::Files" do

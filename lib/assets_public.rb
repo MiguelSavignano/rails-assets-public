@@ -24,6 +24,8 @@ module AssetsPublic
 end
 
 class AssetsPublic::Files
+  attr_reader :htmls
+
   def initialize(path=".")
     @htmls = Dir["#{path}/**/*.html"]
   end
@@ -42,24 +44,15 @@ class AssetsPublic::Files
   def self.move_copy_file(file_path="", to_folder_path="")
     `cp #{file_path} #{to_folder_path}`
   end
-
-  def htmls
-    @htmls
-  end
 end
 
 class AssetsPublic::Html
+  attr_reader :path
+  attr_reader :lines
+
   def initialize(path="")
     @path = path
     @lines = IO.readlines(path)
-  end
-
-  def path
-    @path
-  end
-
-  def lines
-    @lines
   end
 
   def scripts_lines
@@ -73,11 +66,11 @@ class AssetsPublic::Html
   end
 
   def scripts_paths
-    scripts_paths = scripts_lines.map do |script_line|
+    @scripts_paths ||= scripts_lines.map do |script_line|
       src_path = AssetsPublic.extract_src_path(script_line)
       AssetsPublic::Files.resolve_path(@path, src_path) unless src_path.include?("https:/") || src_path.include?("http:/")
     end
-    scripts_paths.compact
+    @scripts_paths.compact
   end
 end
 
