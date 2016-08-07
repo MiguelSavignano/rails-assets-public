@@ -1,6 +1,6 @@
 #!/usr/bin/env ruby
 require 'assets_public'
-result = AssetsPublic.run(ARGV[0])
+result = AssetsPublic.run(ARGV[0], ARGV[1] )
 
 # result[:html_files].each do |html|
 #   puts  "#{html.path.split('/').last}\n"
