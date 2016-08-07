@@ -1,11 +1,12 @@
 #!/usr/bin/env ruby
-require 'assets_public'
+require 'rails-assets-public'
 result = AssetsPublic.run(ARGV[0], ARGV[1])
 result[:html_files].each do |html|
   puts  "#{html.path}\n"
 end
 puts "analize #{result[:html_files].size} html files\n"
-puts "*"*10 && puts "\n"
+puts "*"*10
+puts "\n"
 
 result[:scripts_paths].each do |scripts_path|
   puts  "#{scripts_path}\n"
