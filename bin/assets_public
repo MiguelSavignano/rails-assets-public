@@ -1,20 +1,18 @@
 #!/usr/bin/env ruby
-require 'rails-assets-public'
-result = AssetsPublic.run(ARGV[0], ARGV[1])
-result[:html_files].each do |html|
-  puts  "#{html.path}\n"
-end
-puts "analize #{result[:html_files].size} html files\n"
-puts "*"*10
-puts "\n"
+require 'assets_public'
+result = AssetsPublic.run(ARGV[0])
 
+# result[:html_files].each do |html|
+#   puts  "#{html.path.split('/').last}\n"
+# end
 result[:scripts_paths].each do |scripts_path|
-  puts  "#{scripts_path}\n"
+  puts  "#{scripts_path.split('/').last}\n"
 end
-puts "move #{result[:scripts_paths].size} script files\n"
-puts "*"*10 && puts "\n"
+puts "\n"
+puts "Analize #{result[:html_files].size} html files\n".green
+puts "Move #{result[:scripts_paths].size} script files\n".green
 
+puts "script used http: #{result[:scripts_http].size}\n".yellow
 result[:scripts_http].each do |script_http|
-  puts  "#{script_http}\n"
+  puts  "#{script_http.strip}\n"
 end
-puts "script http used #{result[:scripts_http].size}\n"

@@ -16,7 +16,7 @@ module AssetsPublic
       AssetsPublic::Files.move_copy_file(script_path, vendor_folder)
     }
     result = {
-      html_files: files.htmls,
+      html_files: htmls,
       scripts_paths: scripts_paths,
       scripts_http: htmls.map(&:scripts_http).flatten.uniq
     }
@@ -79,4 +79,11 @@ class AssetsPublic::Html
     end
     scripts_paths.compact
   end
+end
+
+class String
+  def red;     "\e[31m#{self}\e[0m" end
+  def green;   "\e[32m#{self}\e[0m" end
+  def red;     "\e[31m#{self}\e[0m" end
+  def yellow;  "\e[33m#{self}\e[0m" end
 end
