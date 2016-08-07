@@ -4,18 +4,22 @@ module AssetsPublic
   end
 
   def self.extract_src_path(line="")
-    line.scan(/src="([^"]*)"/).first.first
+    src_path = line.scan(/src="([^"]*)"/).first || line.scan(/src='([^"]*)'/).first
+    src_path.first || ""
   end
 
   def self.run(app_folder="./public", vendor_folder="./vendor")
     files = AssetsPublic::Files.new(app_folder)
-    files.htmls.each do |html_file_path|
-      html = AssetsPublic::Html.new(html_file_path)
-      html.scripts_path.each do |script_path|
-        AssetsPublic::Files.move_copy_file(script_path, vendor_folder)
-      end
-    end
-    true
+    htmls = files.htmls.map{|html_path| AssetsPublic::Html.new(html_path) }
+    scripts_paths = htmls.map(&:scripts_paths).flatten.uniq
+    scripts_paths.each{ |script_path|
+      AssetsPublic::Files.move_copy_file(script_path, vendor_folder)
+    }
+    result = {
+      html_files: files.htmls,
+      scripts_paths: scripts_paths,
+      scripts_http: htmls.map(&:scripts_http).flatten.uniq
+    }
   end
 end
 
@@ -55,10 +59,16 @@ class AssetsPublic::Html
   end
 
   def scripts_lines
-    lines.select{|line| AssetsPublic.script? line }
+    @scripts_lines ||= lines.select{|line| AssetsPublic.script? line }
   end
 
-  def scripts_path
+  def scripts_http
+    @scripts_http ||= scripts_lines.select{ |scripts_line|
+      scripts_line.include?("https:/") || scripts_line.include?("http:/")
+    }
+  end
+
+  def scripts_paths
     scripts_paths = scripts_lines.map do |script_line|
       src_path = AssetsPublic.extract_src_path(script_line)
       AssetsPublic::Files.resolve_path(@path, src_path) unless src_path.include?("https:/") || src_path.include?("http:/")

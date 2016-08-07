@@ -1,6 +1,3 @@
 #!/usr/bin/env ruby
 require 'assets_public'
 result = assets_public.run(ARGV[0], ARGV[1])
-
-# Example
-# assets_public "spec/fixture/public/app" 
