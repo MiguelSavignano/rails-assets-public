@@ -54,6 +54,10 @@ class AssetsPublic::Html
     @lines = IO.readlines(path)
   end
 
+  def path
+    @path
+  end
+
   def lines
     @lines
   end

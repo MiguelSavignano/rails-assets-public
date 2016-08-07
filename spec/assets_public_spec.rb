@@ -19,7 +19,6 @@ describe "AssetsPublic" do
     expect(r[:scripts_paths].size).to eq(94)
     expect(r[:scripts_http].size).to eq(5)
   end
-
 end
 
 describe "AssetsPublic::Files" do

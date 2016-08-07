@@ -1,3 +1,19 @@
 #!/usr/bin/env ruby
 require 'assets_public'
-result = assets_public.run(ARGV[0], ARGV[1])
+result = AssetsPublic.run(ARGV[0], ARGV[1])
+result[:html_files].each do |html|
+  puts  "#{html.path}\n"
+end
+puts "analize #{result[:html_files].size} html files\n"
+puts "*"*10 && puts "\n"
+
+result[:scripts_paths].each do |scripts_path|
+  puts  "#{scripts_path}\n"
+end
+puts "move #{result[:scripts_paths].size} script files\n"
+puts "*"*10 && puts "\n"
+
+result[:scripts_http].each do |script_http|
+  puts  "#{script_http}\n"
+end
+puts "script http used #{result[:scripts_http].size}\n"
