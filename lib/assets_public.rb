@@ -8,7 +8,14 @@ module AssetsPublic
   end
 
   def self.run(app_folder="./public", vendor_folder="./vendor")
-    
+    files = AssetsPublic::Files.new(app_folder)
+    files.htmls.each do |html_file_path|
+      html = AssetsPublic::Html.new(html_file_path)
+      html.scripts_path.each do |script_path|
+        AssetsPublic::Files.move_copy_file(script_path, vendor_folder)
+      end
+    end
+    true
   end
 end
 
